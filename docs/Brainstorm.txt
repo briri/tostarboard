@@ -1,0 +1,33 @@
+JibeSet 2.0
+
+Roles:
+  - Skipper: Register boat, enter boat stats, pay entry fee, sign waibvers, view results, look for crew
+  - Racer: view results, look for boats
+  - Yacht Club Admin: Register club, create events, post results, upload course maps, communicate with fleet,
+    group boats into fleets, enter courses, assign fleets to courses on race day,
+    perform race day tasks (e.g. general recall)
+  - Super Admin: Everything to manage site
+
+User: Register, edit profile
+
+Region: (e.g. US, West Coast, SF Bay Area, S. CA, Cheseapeake, etc.) (parent-child hierarchy)
+
+Club:
+  - Sailing Organization (e.g. Single handed sailors, bay area multihulls, etc.)
+  - Yacht Club
+
+Series: (collection of events), participants, instructions/description, fee, waiver, flyer pdf, standings
+
+Event:
+  - Race: Date, start time
+    - Result: Boat, course, finish time flags (e.g. DNS, DNF, etc.), instructions/description, fee, waiver, flyer pdf
+  - Speaker: Date, start time, instructions/description, fee, flyer pdf
+  - Party: Date, start time, instructions/description, fee, flyer pdf
+
+
+Need to find a place to pull latest handicaps
+Stripe to collect fees
+
+Mobile app
+  - Has race maps and
+  - Does a countdown clock during race and shows flag

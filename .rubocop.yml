@@ -1,0 +1,12 @@
+
+AllCops:
+  Exclude:
+    - db/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/LineLength:
+  Max: 100
+  IgnoredPatterns: ['(\A|\s)#']
