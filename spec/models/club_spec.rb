@@ -21,6 +21,7 @@ RSpec.describe Club, type: :model do
 
   context 'associations' do
     it { is_expected.to have_many(:admins) }
+    it { is_expected.to have_many(:events) }
     it { is_expected.to belong_to(:region) }
   end
 end

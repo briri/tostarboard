@@ -29,6 +29,21 @@ ActiveRecord::Schema.define(version: 2019_05_13_191151) do
     t.index ["type"], name: "index_clubs_on_type"
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.text "instructions"
+    t.float "fee"
+    t.datetime "start_on"
+    t.datetime "end_on"
+    t.bigint "club_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["club_id"], name: "index_events_on_club_id"
+    t.index ["end_on"], name: "index_events_on_end_on"
+    t.index ["start_on"], name: "index_events_on_start_on"
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string "name"
     t.string "description"
