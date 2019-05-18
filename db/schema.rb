@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_13_191151) do
+ActiveRecord::Schema.define(version: 2019_05_17_193802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 2019_05_13_191151) do
     t.bigint "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "series_id"
     t.index ["name"], name: "index_clubs_on_name"
     t.index ["region_id"], name: "index_clubs_on_region_id"
+    t.index ["series_id"], name: "index_clubs_on_series_id"
     t.index ["type"], name: "index_clubs_on_type"
   end
 
@@ -39,8 +41,13 @@ ActiveRecord::Schema.define(version: 2019_05_13_191151) do
     t.bigint "club_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "series_id"
+    t.datetime "registration_start"
+    t.datetime "registration_end"
+    t.integer "max_registrations"
     t.index ["club_id"], name: "index_events_on_club_id"
     t.index ["end_on"], name: "index_events_on_end_on"
+    t.index ["series_id"], name: "index_events_on_series_id"
     t.index ["start_on"], name: "index_events_on_start_on"
   end
 
@@ -51,6 +58,21 @@ ActiveRecord::Schema.define(version: 2019_05_13_191151) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_regions_on_parent_id"
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.boolean "paid", default: false
+    t.datetime "paid_on"
+    t.string "invoice_id"
+    t.text "notes"
+    t.bigint "user_id"
+    t.bigint "series_id"
+    t.bigint "events_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["events_id"], name: "index_registrations_on_events_id"
+    t.index ["series_id"], name: "index_registrations_on_series_id"
+    t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -67,6 +89,20 @@ ActiveRecord::Schema.define(version: 2019_05_13_191151) do
     t.datetime "updated_at", null: false
     t.index ["role_id"], name: "index_roles_users_on_role_id"
     t.index ["user_id"], name: "index_roles_users_on_user_id"
+  end
+
+  create_table "series", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.text "instructions"
+    t.float "fee"
+    t.bigint "club_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "registration_start"
+    t.datetime "registration_end"
+    t.integer "max_registrations"
+    t.index ["club_id"], name: "index_series_on_club_id"
   end
 
   create_table "users", force: :cascade do |t|

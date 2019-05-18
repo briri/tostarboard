@@ -2,27 +2,23 @@
 
 # A single event
 class Event < ApplicationRecord
-
   include ActiveModel::Validations
 
-  belongs_to :club
+  belongs_to :club, optional: true
+  belongs_to :series, optional: true
+  has_many :registrations, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :start_on, presence: true
   validates :end_on, presence: true
+  validates :registration_start, presence: true
+  validates :registration_end, presence: true
+  validates :max_registrations, numericality: { only_integer: true }
+
+  # Enforce that the model belongs to a Club OR a Series
+  validates :club, presence: true, unless: :series
+  validates :series, presence: true, unless: :club
 
   validates_with StartOnValidator
-  #validate  :start_on, :start_on_cannot_be_after_end_on #, :start_on_cannot_be_in_past
-
-  private
-
-  # Custom date validations
-  def start_on_cannot_be_in_past
-    errors.add(:start_on, 'must happen in the future') if Time.now >= @start_on
-  end
-
-  def start_on_cannot_be_after_end_on
-    p "START: #{start_on}, END: #{end_on}"
-    errors.add(:start_on, 'must be before the end') if @start_on >= @end_on
-  end
+  validates_with RegistrationDateValidator
 end

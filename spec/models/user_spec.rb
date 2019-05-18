@@ -23,6 +23,7 @@ RSpec.describe User, type: :model do
   context 'associations' do
     it { is_expected.to have_and_belong_to_many(:roles) }
     it { is_expected.to belong_to(:club) }
+    it { is_expected.to have_many(:registrations) }
   end
 
   context 'instance methods' do
