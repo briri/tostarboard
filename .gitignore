@@ -23,7 +23,7 @@ config/master.key
 # Exclude sensitive config files
 config/database.yml
 config/initializers/devise.rb
-config/initializers/oomniauth.rb
+config/initializers/omniauth.rb
 config/initializers/recaptcha.rb
 
 # dotenv
