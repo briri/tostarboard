@@ -11,13 +11,18 @@ RSpec.describe Registration, type: :model do
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to validate_presence_of(:series) }
     it { is_expected.to validate_presence_of(:event) }
-    it { is_expected.to validate_presence_of(:invoice_id) }
-    it { is_expected.to validate_presence_of(:paid_on) }
+    it { is_expected.to validate_presence_of(:paid) }
 
     it 'should validate that invoice_id is unique' do
-      subject.name = Faker::Alphanumeric.unique.alphanumeric 10
+      subject.invoice_id = Faker::Alphanumeric.unique.alphanumeric 10
       is_expected.to validate_uniqueness_of(:invoice_id).with_message('has already been taken')
     end
+
+    context 'paid' do
+      it { subject.paid = true; is_expected.to validate_presence_of(:invoice_id) }
+      it { subject.paid = true; is_expected.to validate_presence_of(:paid_on) }
+    end
+
   end
 
   context 'associations' do

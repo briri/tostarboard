@@ -7,10 +7,14 @@ RSpec.describe YachtClub, type: :model do
     @club = build(:yacht_club)
   end
 
+  context 'inheritence' do
+    it { expect(described_class).to be < Club }
+  end
+
   context 'instance methods' do
     context 'type' do
       it "is 'yacht_club'" do
-        expect(@club.type).to eql('yacht_club')
+        expect(@club.club_type).to eql('yacht_club')
       end
     end
 

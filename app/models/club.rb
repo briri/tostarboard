@@ -7,6 +7,8 @@ class Club < ApplicationRecord
   has_many   :events, dependent: :destroy
   has_many   :series, dependent: :destroy
 
-  validates  :type, presence: true
+  validates  :club_type, presence: true
   validates  :name, presence: true, uniqueness: { case_sensitive: false }
+
+  enum club_type: %i[yacht_club sailing_association]
 end

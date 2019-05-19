@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A type of event
-class Registration < Event
+class Registration < ApplicationRecord
   belongs_to :user
   belongs_to :series, optional: true
   belongs_to :event, optional: true
@@ -10,6 +10,7 @@ class Registration < Event
   validates :series, presence: true, unless: :event
   validates :event, presence: true, unless: :series
 
+  validates :paid, presence: true
   validates :invoice_id, uniqueness: { case_sensitive: true }
   validates :invoice_id, presence: true, if: :paid?
   validates :paid_on, presence: true, if: :paid?

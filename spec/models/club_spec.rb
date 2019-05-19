@@ -9,7 +9,7 @@ RSpec.describe Club, type: :model do
 
   context 'validations' do
     it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_presence_of(:type) }
+    it { is_expected.to validate_presence_of(:club_type) }
 
     it 'should validate that name is unique' do
       subject.name = Faker::Movies::HitchhikersGuideToTheGalaxy.unique.planet

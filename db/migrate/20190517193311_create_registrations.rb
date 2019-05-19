@@ -5,9 +5,9 @@ class CreateRegistrations < ActiveRecord::Migration[5.2]
       t.datetime   :paid_on
       t.string     :invoice_id
       t.text       :notes
-      t.references :user, index: true
-      t.references :series, index: true
-      t.references :events, index: true
+      t.belongs_to :user, index: true
+      t.belongs_to :series, index: true
+      t.belongs_to :event, index: true
       t.timestamps
     end
   end

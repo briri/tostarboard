@@ -9,7 +9,7 @@ class User < ApplicationRecord
          :omniauthable
 
   has_and_belongs_to_many :roles
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
 
   belongs_to :club, optional: true
 

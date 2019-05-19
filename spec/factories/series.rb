@@ -3,10 +3,13 @@
 FactoryBot.define do
   factory :series do
     club
-    name         { Faker::Lorem.unique.word }
-    description  { Faker::Lorem.paragraph }
-    instructions { Faker::Lorem.paragraph }
-    fee          { Faker::Number.decimal(2) }
+    name               { Faker::Lorem.unique.word }
+    description        { Faker::Lorem.paragraph }
+    instructions       { Faker::Lorem.paragraph }
+    fee                { Faker::Number.decimal(2) }
+    registration_start { Time.now + 1.days }
+    registration_end   { Time.now + 15.days }
+    max_registrations  { Faker::Number.number 2 }
 
     factory :series_with_events do
       transient do

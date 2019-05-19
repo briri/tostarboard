@@ -6,7 +6,7 @@ FactoryBot.define do
     series
     event
     paid         { true }
-    paid_on      { Faker::Time.backward(2, :evening) }
+    paid_on      { Time.now - 1.days }
     invoice_id   { Faker::Lorem.word }
     notes        { Faker::Lorem.paragraph }
 

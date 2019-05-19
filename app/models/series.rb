@@ -6,6 +6,7 @@ class Series < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :registrations, dependent: :destroy
 
+  validates :club, presence: true
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :registration_start, presence: true
   validates :registration_end, presence: true

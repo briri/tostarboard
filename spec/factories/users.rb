@@ -11,4 +11,8 @@ FactoryBot.define do
     roles         { [] }
     registrations { [] }
   end
+
+  factory :user_with_vessel, parent: :user do
+  	vessel        { create(:vessel) }
+  end
 end

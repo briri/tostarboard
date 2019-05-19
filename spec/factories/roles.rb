@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :role do
-    name         { 'racer' }
+    name         { 'crew' }
     description  { Faker::Lorem.sentence }
 
     trait :super_admin do
@@ -14,8 +14,8 @@ FactoryBot.define do
     trait :skipper do
       name  { 'skipper' }
     end
-    trait :racer do
-      name  { 'racer' }
+    trait :crew do
+      name  { 'crew' }
     end
   end
 end

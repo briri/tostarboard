@@ -9,13 +9,6 @@ RSpec.describe Role, type: :model do
 
   context 'validations' do
     it { is_expected.to validate_presence_of(:name) }
-
-    it 'should validate that name is unique' do
-      subject.name = 'Club Admin'
-      is_expected.to validate_uniqueness_of(:name)
-        .case_insensitive
-        .with_message('has already been taken')
-    end
   end
 
   context 'associations' do
