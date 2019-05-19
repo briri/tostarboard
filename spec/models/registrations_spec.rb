@@ -18,11 +18,12 @@ RSpec.describe Registration, type: :model do
       is_expected.to validate_uniqueness_of(:invoice_id).with_message('has already been taken')
     end
 
+    # rubocop:disable Style/Semicolon
     context 'paid' do
       it { subject.paid = true; is_expected.to validate_presence_of(:invoice_id) }
       it { subject.paid = true; is_expected.to validate_presence_of(:paid_on) }
     end
-
+    # rubocop:enable Style/Semicolon
   end
 
   context 'associations' do

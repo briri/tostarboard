@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # frozen_dtring_literal: true
 
 # A sailing vessel

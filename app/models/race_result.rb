@@ -5,7 +5,7 @@ class RaceResult < ApplicationRecord
   include ActiveModel::Validations
 
   belongs_to :vessel
-  belongs_to :race #, class_name: :Race, foreign_key: 'event_id'
+  belongs_to :race # , class_name: :Race, foreign_key: 'event_id'
 
   validates :vessel, presence: true
   validates :race, presence: true

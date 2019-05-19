@@ -11,7 +11,7 @@ FactoryBot.define do
     notes        { Faker::Lorem.paragraph }
 
     factory :registration_with_stubbed_user do
-      user       { create(:user) }
+      user { create(:user) }
     end
   end
 end

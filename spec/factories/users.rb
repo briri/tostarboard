@@ -13,6 +13,6 @@ FactoryBot.define do
   end
 
   factory :user_with_vessel, parent: :user do
-  	vessel        { create(:vessel) }
+    vessel { create(:vessel) }
   end
 end

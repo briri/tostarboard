@@ -12,8 +12,8 @@ RSpec.describe Vessel, type: :model do
   end
 
   context 'associations' do
-  	it { is_expected.to belong_to(:owner) }
-  	it { is_expected.to belong_to(:rating) }
+    it { is_expected.to belong_to(:owner) }
+    it { is_expected.to belong_to(:rating) }
     it { is_expected.to have_many(:users) }
     it { is_expected.to have_many(:race_results) }
   end

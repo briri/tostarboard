@@ -28,7 +28,7 @@ FactoryBot.define do
       results_count { 2 }
     end
 
-    after(:create) do |event, evaluator|
+    after(:create) do |_event, evaluator|
       create_list(:race_result, evaluator.results_count, race: race)
     end
   end

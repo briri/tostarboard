@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :race_result do
     vessel
-    race    
+    race
     course        { Faker::Alpha.alpha 1 }
     start_on      { Time.now + 10.minutes }
     end_on        { Time.now + 70.minutes }

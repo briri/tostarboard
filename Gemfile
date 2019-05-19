@@ -78,6 +78,10 @@ group :development, :test do
   # rspec-rails brings the RSpec testing framework to Ruby on Rails
   # as a drop-in alternative to its default testing framework, Minitest.
   gem 'rspec-rails'
+  # RuboCop is a Ruby static code analyzer and code formatter.
+  gem 'rubocop'
+  # Performance optimization analysis for your projects, as an extension to RuboCop.
+  gem 'rubocop-performance'
   # Making tests easy on the fingers and eyes (https://github.com/thoughtbot/shoulda)
   gem 'shoulda', require: false
   # Library for stubbing HTTP requests in Ruby. (http://github.com/bblimke/webmock)
