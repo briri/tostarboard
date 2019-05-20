@@ -31,3 +31,14 @@ Stripe to collect fees
 Mobile app
   - Has race maps and
   - Does a countdown clock during race and shows flag
+
+
+
+Link to glossary of terms for PHRF ratings:
+  http://www1.headwaycloud.com/clients/14/uploaded_files/phrf-ne_glossary_final_5_22.pdf
+
+Link to New England PHRF Ratings:
+  view-source:http://www.phrfne.org/page/handicapping/base_handicaps
+
+SF PHRF Ratings:
+  https://yra.org/northern-california-phrf/ncphrf-ratings/

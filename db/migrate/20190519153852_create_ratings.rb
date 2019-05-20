@@ -1,6 +1,7 @@
 class CreateRatings < ActiveRecord::Migration[5.2]
   def change
     create_table :ratings do |t|
+      t.references :region, index: true
       t.string :boat_type
       t.integer :rating
       t.float :sail_plan_i
