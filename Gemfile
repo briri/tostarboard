@@ -61,6 +61,9 @@ gem 'recaptcha'
 # Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
 gem 'pg'
 
+# A simple, fast Mysql library for Ruby, binding to libmysql (https://github.com/brianmario/mysql2)
+gem 'mysql2', '~> 0.4.10'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
   # debugger console

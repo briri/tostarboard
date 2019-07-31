@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_05_19_155529) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "clubs", force: :cascade do |t|
+  create_table "clubs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "club_type"
     t.string "name"
     t.text "description"
@@ -31,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["series_id"], name: "index_clubs_on_series_id"
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.text "instructions"
@@ -51,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["start_on"], name: "index_events_on_start_on"
   end
 
-  create_table "race_results", force: :cascade do |t|
+  create_table "race_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "race_id"
     t.string "course"
     t.datetime "start_on"
@@ -67,7 +64,8 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["vessel_id"], name: "index_race_results_on_vessel_id"
   end
 
-  create_table "ratings", force: :cascade do |t|
+  create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "region_id"
     t.string "boat_type"
     t.integer "rating"
     t.float "sail_plan_i"
@@ -79,9 +77,10 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.float "displacement"
     t.float "length_water_line"
     t.float "draft"
+    t.index ["region_id"], name: "index_ratings_on_region_id"
   end
 
-  create_table "regions", force: :cascade do |t|
+  create_table "regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.bigint "parent_id"
@@ -90,7 +89,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["parent_id"], name: "index_regions_on_parent_id"
   end
 
-  create_table "registrations", force: :cascade do |t|
+  create_table "registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.boolean "paid", default: false
     t.datetime "paid_on"
     t.string "invoice_id"
@@ -105,14 +104,14 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, force: :cascade do |t|
+  create_table "roles_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "role_id", null: false
     t.datetime "created_at", null: false
@@ -121,7 +120,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
-  create_table "series", force: :cascade do |t|
+  create_table "series", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.text "instructions"
@@ -135,7 +134,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["club_id"], name: "index_series_on_club_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email", default: "", null: false
@@ -152,7 +151,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_155529) do
     t.index ["vessel_id"], name: "index_users_on_vessel_id"
   end
 
-  create_table "vessels", force: :cascade do |t|
+  create_table "vessels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "make"
     t.string "model"
