@@ -19,4 +19,13 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#show'
 
   get '/terms', to: 'home#terms'
+
+  # API version 1
+  namespace :api do
+    namespace :v1 do
+      resources :regions, only: %i[index show]
+      resources :vessels
+    end
+  end
+
 end
