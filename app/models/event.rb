@@ -9,10 +9,10 @@ class Event < ApplicationRecord
   has_many :registrations, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :start_on, presence: true
-  validates :end_on, presence: true
-  validates :registration_start, presence: true
-  validates :registration_end, presence: true
+  validates :start_on, presence: true, not_in_past: true
+  validates :end_on, presence: true, not_in_past: true
+  validates :registration_start, presence: true, not_in_past: true
+  validates :registration_end, presence: true, not_in_past: true
   validates :max_registrations, numericality: { only_integer: true }
 
   # Enforce that the model belongs to a Club OR a Series

@@ -11,11 +11,6 @@ class RegistrationDateValidator < ActiveModel::Validator
   def validate(record)
     return if record.registration_start.nil?
 
-    unless record.registration_start >= Time.now
-      record.errors[:registration_start] << 'cannot start in the past'
-    end
-    return if record.registration_end.nil?
-
     unless record.registration_start < record.registration_end
       record.errors[:registration_start] << 'cannot start before it ends'
     end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-def stub_api_token
-	{ 'api_token': Faker::Crypto.sha256 }
+def stub_api_tokens(user:)
+	return {} unless user.present?
+	user.api_credentials!
 end
 
 # Parse response body as json

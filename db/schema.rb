@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_155219) do
+ActiveRecord::Schema.define(version: 2019_08_04_170904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_access", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "access_token"
+    t.datetime "expiry_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_token"], name: "index_api_access_on_access_token"
+    t.index ["expiry_date"], name: "index_api_access_on_expiry_date"
+    t.index ["user_id"], name: "index_api_access_on_user_id"
+  end
 
   create_table "clubs", force: :cascade do |t|
     t.string "club_type"
@@ -146,7 +157,8 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
     t.boolean "accept_terms"
     t.bigint "club_id"
     t.bigint "vessel_id"
-    t.string "api_token"
+    t.string "client_token"
+    t.string "client_secret"
     t.index ["club_id"], name: "index_users_on_club_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

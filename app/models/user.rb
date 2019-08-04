@@ -30,16 +30,30 @@ class User < ApplicationRecord
     super(value&.humanize)
   end
 
-  def api_token=(value)
-    value.blank? ? super(nil) : super(generate_api_token)
+  def api_credentials!
+    token = generate_api_token!
+    secret = generate_api_secret!
+    return {} if token.nil? || secret.nil?
+
+    update(client_token: token, client_secret: secret)
+    { client_token: token, client_secret: secret }
   end
 
   private
 
-  def generate_api_token
-    return api_token if api_token.present?
+  def generate_api_token!
+    return client_token if client_token.present?
     return nil unless email.present?
-    TokenService.generate_digest(email)
+
+    client_token = TokenService.generate_secret
+    update(client_token: client_token)
+  end
+
+  def generate_api_secret!
+    return client_secret if client_secret.present?
+    return nil unless email.present? && client_token.present?
+    
+    TokenService.generate_digest({ email: email, client_token: client_token })
   end
 
 end

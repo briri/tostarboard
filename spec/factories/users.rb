@@ -7,7 +7,6 @@ FactoryBot.define do
     email         { Faker::Internet.unique.safe_email }
     password      { 'password' }
     accept_terms  { true }
-    api_token     { email }
 
     roles         { [] }
     registrations { [] }

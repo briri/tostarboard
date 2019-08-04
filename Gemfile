@@ -44,8 +44,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # -------------------------------------------------------------------------
 # Devise is a flexible authentication solution for Rails based on Warden.
 gem 'devise'
-# Doorkeeper introduce OAuth 2 provider functionality to your Rails application.
-gem 'doorkeeper'
+# A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
+gem 'jwt'
 # OmniAuth is a library that standardizes multi-provider authentication for
 # web applications.
 gem 'omniauth'
