@@ -46,13 +46,15 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 # Doorkeeper introduce OAuth 2 provider functionality to your Rails application.
 gem 'doorkeeper'
+# Doorkeeper JWT adds JWT token support to the Doorkeeper OAuth library.
+gem 'doorkeeper-jwt'
 # OmniAuth is a library that standardizes multi-provider authentication for
 # web applications.
 gem 'omniauth'
 # Facebook OAuth2 Strategy for OmniAuth.
-gem 'omniauth-facebook'
+#gem 'omniauth-facebook'
 # Strategy to authenticate with Google via OAuth2 in OmniAuth.
-gem 'omniauth-google-oauth2'
+#gem 'omniauth-google-oauth2'
 # Authorization for Rails (https://github.com/varvet/pundit)
 gem 'pundit'
 # This plugin adds helpers for the reCAPTCHA API.

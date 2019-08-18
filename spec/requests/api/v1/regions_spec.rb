@@ -6,13 +6,13 @@ RSpec.describe Api::V1::RegionsController, type: :request do
 
 	before(:each) do
 		user = create(:user)
+		mock_access_token(user: user)
 		@regions = (0..1).map { create(:region) }
 		@valid_keys = [:id, :name, :description, :parent_id, :created_at, :updated_at]
-		@headers = { headers: { 'api_token': user.api_token } }
 	end
 
   describe 'GET /regions' do
-		before(:each) { get api_v1_regions_path, @headers }
+		before(:each) { get api_v1_regions_path, headers: default_authenticated_headers }
       
   	it "returns http success" do
       expect(@response).to have_http_status(:success)
@@ -23,7 +23,7 @@ RSpec.describe Api::V1::RegionsController, type: :request do
   end
 
   describe 'GET /region/:id' do
-  	before(:each) { get api_v1_regions_path(@regions.first.id), @headers }
+  	before(:each) { get api_v1_regions_path(@regions.first.id), headers: default_authenticated_headers }
 
   	context 'known id' do
 	  	it "returns http success" do
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::RegionsController, type: :request do
 	  end
 
     context 'unknown id' do
-    	before(:each) { get api_v1_regions_path(999999), @headers }
+    	before(:each) { get api_v1_regions_path(999999), headers: default_authenticated_headers }
 
 	    it 'returns http not found' do
 	    	expect(@response).to have_http_status(:not_found)

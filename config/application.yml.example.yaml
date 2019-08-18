@@ -1,0 +1,9 @@
+default: &default
+  name: 'To Starboard - Dev'
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+  name: 'To Starboard'

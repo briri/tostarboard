@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :vessel do
-    owner        {}
     rating       {}
     name         { Faker::Lorem.word }
     sail_number  { Faker::Alphanumeric.alphanumeric 4 }
@@ -12,13 +11,19 @@ FactoryBot.define do
     beam         { Faker::Number.decimal 1 }
     draft        { Faker::Number.decimal 1 }
 
+    factory :vessel_with_owner do
+      after(:create) do |vessel, evaluator|
+        create_list(:crew, evaluator.crew_count, vessel: vessel, user: create(:user), role: :owner)
+      end
+    end
+
     factory :vessel_with_crew do
       transient do
         crew_count { 2 }
       end
 
       after(:create) do |vessel, evaluator|
-        create_list(:user, evaluator.crew_count, vessel: vessel)
+        create_list(:crew, evaluator.crew_count, vessel: vessel, user: create(:user), role: :crew)
       end
     end
   end

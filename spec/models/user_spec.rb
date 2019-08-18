@@ -22,6 +22,8 @@ RSpec.describe User, type: :model do
 
   context 'associations' do
     it { is_expected.to have_and_belong_to_many(:roles) }
+    it { is_expected.to have_many(:users_vessels) }
+    it { is_expected.to have_many(:vessels) }
     it { is_expected.to belong_to(:club) }
     it { is_expected.to have_many(:registrations) }
   end
@@ -57,6 +59,34 @@ RSpec.describe User, type: :model do
         @user.first_name = nil
         @user.last_name = nil
         expect(@user.name).to eq(@user.email.to_s)
+      end
+    end
+
+    describe '#to_json' do
+      before(:each) do
+        @user.save
+        @json = JSON.parse(@user.to_json)
+      end
+
+      it 'returns the fields we expect' do
+        expect(@json['id']).to eql(@user.id)
+        expect(@json['first_name']).to eql(@user.first_name)
+        expect(@json['last_name']).to eql(@user.last_name)
+        expect(@json['email']).to eql(@user.email)
+      end
+      it 'does not return the fields we expect to be ommitted' do
+        expect(@json.fetch('secret', nil)).to eql(nil)
+        expect(@json.fetch('encrypted_password', nil)).to eql(nil)
+        expect(@json.fetch('reset_password_token', nil)).to eql(nil)
+        expect(@json.fetch('remember_created_at', nil)).to eql(nil)
+        expect(@json.fetch('accept_terms', nil)).to eql(nil)
+      end
+      it 'returns the associations we expect' do
+        create(:users_vessel, vessel: create(:vessel), user: @user)
+        @user.update(club: create(:club))
+        @json = JSON.parse(@user.reload.to_json)
+        expect(@json['club'].length).to eql(1)
+        expect(@json['vessels'].length).to eql(1)
       end
     end
   end

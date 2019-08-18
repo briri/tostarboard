@@ -21,5 +21,19 @@ module Tostarboard
 
     # Load all services
     config.eager_load_paths << "app/services"
+
+    # Load application YAML config
+    config.x.branding = config_for(:branding)
+
+    config.to_prepare do
+      # Only Applications list
+      Doorkeeper::ApplicationsController.layout 'application'
+
+      # Only Authorization endpoint
+      # Doorkeeper::AuthorizationsController.layout 'application'
+
+      # Only Authorized Applications
+      # Doorkeeper::AuthorizedApplicationsController.layout 'application'
+    end
   end
 end

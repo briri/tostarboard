@@ -22,8 +22,10 @@ config/initializers/secret_token.rb
 config/master.key
 
 # Exclude sensitive config files
+config/application.yml
 config/database.yml
 config/initializers/devise.rb
+config/initializers/doorkeeper.rb
 config/initializers/omniauth.rb
 config/initializers/recaptcha.rb
 

@@ -12,8 +12,11 @@ Rails.application.routes.draw do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
 
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
 
   get '/dashboard', to: 'dashboard#show'
@@ -23,8 +26,15 @@ Rails.application.routes.draw do
   # API version 1
   namespace :api do
     namespace :v1 do
+      get '/me', format: :json, to: 'api#me'
+      get '/heartbeat', format: :json, to: 'api#heartbeat'
+
+      resources :users, only: %i[show]
       resources :regions, only: %i[index show]
+      resources :clubs
       resources :vessels
+      resources :ratings
+      resources :events
     end
   end
 

@@ -7,13 +7,16 @@ FactoryBot.define do
     email         { Faker::Internet.unique.safe_email }
     password      { 'password' }
     accept_terms  { true }
-    api_token     { email }
+
+    oauth_applications { [] }
+    access_grants { [] }
+    access_tokens { [] }
 
     roles         { [] }
     registrations { [] }
   end
 
-  factory :user_with_vessel, parent: :user do
-    vessel { create(:vessel) }
+  factory :user_who_owns_vessel, parent: :user do
+    crew   { create(:crew, user: self, vessel: create(:vessel), role: :owner) }
   end
 end

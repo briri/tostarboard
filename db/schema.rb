@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_155219) do
+ActiveRecord::Schema.define(version: 2019_08_18_164501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,51 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
     t.index ["start_on"], name: "index_events_on_start_on"
   end
 
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.bigint "resource_owner_id", null: false
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  end
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.bigint "resource_owner_id"
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.string "refresh_token"
+    t.integer "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.string "scopes"
+    t.string "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  end
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "uid", null: false
+    t.string "secret", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "owner_id"
+    t.string "owner_type"
+    t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type"
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
   create_table "race_results", force: :cascade do |t|
     t.bigint "race_id"
     t.string "course"
@@ -68,6 +113,7 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
   end
 
   create_table "ratings", force: :cascade do |t|
+    t.bigint "region_id"
     t.string "boat_type"
     t.integer "rating"
     t.float "sail_plan_i"
@@ -79,6 +125,7 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
     t.float "displacement"
     t.float "length_water_line"
     t.float "draft"
+    t.index ["region_id"], name: "index_ratings_on_region_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -146,11 +193,20 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
     t.boolean "accept_terms"
     t.bigint "club_id"
     t.bigint "vessel_id"
-    t.string "api_token"
+    t.string "secret"
     t.index ["club_id"], name: "index_users_on_club_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["id", "secret"], name: "index_users_on_id_and_secret"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["vessel_id"], name: "index_users_on_vessel_id"
+  end
+
+  create_table "users_vessels", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "vessel_id", null: false
+    t.string "role", default: "1", null: false
+    t.index ["user_id"], name: "index_users_vessels_on_user_id"
+    t.index ["vessel_id"], name: "index_users_vessels_on_vessel_id"
   end
 
   create_table "vessels", force: :cascade do |t|
@@ -163,15 +219,15 @@ ActiveRecord::Schema.define(version: 2019_08_03_155219) do
     t.string "sail_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "owner_id"
     t.bigint "rating_id"
-    t.index ["owner_id"], name: "index_vessels_on_owner_id"
     t.index ["rating_id"], name: "index_vessels_on_rating_id"
   end
 
   add_foreign_key "clubs", "regions"
   add_foreign_key "events", "clubs"
   add_foreign_key "events", "series"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "race_results", "events", column: "race_id"
   add_foreign_key "registrations", "users"
   add_foreign_key "series", "clubs"

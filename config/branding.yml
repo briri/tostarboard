@@ -1,0 +1,14 @@
+development:
+  application:
+    name: 'To Starboard - Dev'
+  helpdesk_email: 'helpme@tostarboard-dev.org'
+
+test:
+  application:
+    name: 'To Starboard - Test'
+  helpdesk_email: 'helpme@tostarboard_test.org'
+
+production:
+  application:
+    name: 'To Starboard'
+  helpdesk_email: 'helpme@tostarboard.org'
