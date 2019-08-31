@@ -8,7 +8,7 @@ ruby '2.6.3'
 # Core Rails gems
 # -------------------------------------------------------------------------
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0.0'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
@@ -39,6 +39,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+gem 'webpacker'
 
 # Authentication
 # -------------------------------------------------------------------------
