@@ -39,7 +39,7 @@ RSpec.describe Api::V1::ApiController, type: :request do
       expect(@json['access_token'].present?).to eql(true)
       expect(@json['token_type']).to eql('Bearer')
       expect(@json['scope']).to eql('read')
-      expect(@json['expires_in'].to_i).to eql(7200)
+      expect([7199, 7200, 7201].include?(@json['expires_in'].to_i)).to eql(true)
       expect(@json['created_at'].present?).to eql(true)
     end
   end
