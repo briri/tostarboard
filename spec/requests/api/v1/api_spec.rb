@@ -76,7 +76,6 @@ RSpec.describe Api::V1::ApiController, type: :request do
       get api_v1_me_path, headers: default_headers
       expect(response.status).to eql(401)
       expect(body_to_json).to eql(nil)
-      expect(@json['error'].present?).to eql(true)      
     end
 
     it 'can be accessed by an authenticated user' do

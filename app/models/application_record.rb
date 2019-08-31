@@ -15,7 +15,7 @@ class ApplicationRecord < ActiveRecord::Base
   def to_json(options)
   	payload = JSON.parse(super(only: %i[id created_at]))
     payload['links'] = [JSON.parse(to_hateoas)] if id.present?
-  	options.each { |attribute| p send(attribute); payload[attribute.to_s] = self[attribute] }
+  	options.each { |attribute| payload[attribute.to_s] = self[attribute] }
   	payload
   end
 end
