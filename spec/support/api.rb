@@ -21,18 +21,19 @@ def get_access_token(doorkeeper_application:, user:)
     uid: user.id,
     secret: user.secret
 	}
-  post oauth_token_path, params: @params, headers: @default_headers
+  post oauth_token_path, params: params, headers: @default_headers
   body_to_json[:access_token]
 end
 
 def setup_access_token(doorkeeper_application:, user:)
+  @token_type = 'Bearer'
   @access_token = get_access_token(doorkeeper_application: doorkeeper_application, user: user)
 end
 
 def default_headers
-  { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+  { 'Accept': 'application/json', 'Content-Type': 'application/json' }
 end
 
 def default_authenticated_headers
-  default_headers.merge('Authorization' => "#{@token_type} #{@access_token}")
+  default_headers.merge('Authorization': "#{@token_type} #{@access_token}")
 end

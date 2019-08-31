@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_164501) do
   enable_extension "plpgsql"
 
   create_table "clubs", force: :cascade do |t|
-    t.string "club_type"
+    t.string "category"
     t.string "name"
     t.text "description"
     t.string "url"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_164501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "series_id"
-    t.index ["club_type"], name: "index_clubs_on_club_type"
+    t.index ["category"], name: "index_clubs_on_category"
     t.index ["name"], name: "index_clubs_on_name"
     t.index ["region_id"], name: "index_clubs_on_region_id"
     t.index ["series_id"], name: "index_clubs_on_series_id"

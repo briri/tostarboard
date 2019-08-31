@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :club do
     name           { Faker::Movies::HitchhikersGuideToTheGalaxy.unique.planet }
     description    { Faker::Lorem.paragraph }
-    club_type      { 'yacht_club' }
+    category       { 'yacht_club' } #Club.categories.keys.sample }
     region         { create(:region) }
 
     factory :club_with_events do
@@ -34,10 +34,10 @@ FactoryBot.define do
   end
 
   factory :yacht_club, parent: :club, class: YachtClub do
-    club_type { 'yacht_club' }
+    category { 'yacht_club' }
   end
 
   factory :sailing_association, parent: :club, class: SailingAssociation do
-    club_type { 'sailing_association' }
+    category { 'sailing_association' }
   end
 end

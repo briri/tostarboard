@@ -12,13 +12,21 @@ RSpec.describe Api::V1::RegionsController, type: :request do
 	end
 
   describe 'GET /regions' do
-		before(:each) { get api_v1_regions_path, headers: default_authenticated_headers }
+		before(:each) do 
+			get api_v1_regions_path, headers: default_authenticated_headers
+			body_to_json
+		end
       
   	it "returns http success" do
       expect(@response).to have_http_status(:success)
+      expect(@json['error'].present?).to eql(false)
     end
     it "JSON body response contains expected regions" do
-      expect(body_to_json.first.keys).to match_array(@valid_keys)
+    	expected = ["regions", [
+    		{"description"=>"Ipsum voluptatum neque quia.", "id"=>1, "name"=>"Bissau", "sub_regions"...]}, 
+    		{"description"=>"Voluptate nostrum alias illo.", "id"=>2, "name"=>"Zagreb", "sub_regions"=>[]
+    	}]]
+      expect(@json['regions'].length).to match_array(@valid_keys)
     end
   end
 

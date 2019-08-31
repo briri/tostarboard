@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :vessels
       resources :ratings
       resources :events
+      resources :series
     end
   end
 

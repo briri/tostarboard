@@ -24,18 +24,21 @@ RSpec.describe Api::V1::ApiController, type: :request do
       @params[:secret] = 'foo'
       post oauth_token_path, params: @params.to_json, headers: default_headers
       expect(response.status).to eql(400)
+      expect(body_to_json['error'].present?).to eql(true)
     end
 
     it 'returns a 401 (unauthorized) for an unknown client' do
       @params[:client_secret] = 'foo'
       post oauth_token_path, params: @params.to_json, headers: default_headers
       expect(response.status).to eql(401)
+      expect(body_to_json['error'].present?).to eql(true)
     end
 
     it 'issues an access token when the client and user are both valid' do
       post oauth_token_path, params: @params.to_json, headers: default_headers
       expect(response.status).to eql(200)
       body_to_json
+      expect(@json['error'].present?).to eql(false)
       expect(@json['access_token'].present?).to eql(true)
       expect(@json['token_type']).to eql('Bearer')
       expect(@json['scope']).to eql('read')
@@ -49,6 +52,7 @@ RSpec.describe Api::V1::ApiController, type: :request do
       get api_v1_heartbeat_path, headers: default_headers
       json = body_to_json
       expect(json['status']).to eql('ok')
+      expect(@json['error'].present?).to eql(false)
       expect(json['application']).to eql(Rails.application.config.x.branding['application']['name'])
     end
   end
@@ -57,11 +61,13 @@ RSpec.describe Api::V1::ApiController, type: :request do
     it 'can be accessed when user is not authenticated' do
       get api_v1_heartbeat_path, headers: default_headers
       expect(body_to_json['status']).to eql('ok')
+      expect(@json['error'].present?).to eql(false)
     end
 
     it 'can be accessed when user is authenticated' do
       get api_v1_heartbeat_path, headers: default_headers
       expect(body_to_json['status']).to eql('ok')
+      expect(@json['error'].present?).to eql(false)
     end
   end
 
@@ -70,6 +76,7 @@ RSpec.describe Api::V1::ApiController, type: :request do
       get api_v1_me_path, headers: default_headers
       expect(response.status).to eql(401)
       expect(body_to_json).to eql(nil)
+      expect(@json['error'].present?).to eql(true)      
     end
 
     it 'can be accessed by an authenticated user' do
@@ -78,8 +85,10 @@ RSpec.describe Api::V1::ApiController, type: :request do
       @user.save
       vessel = create(:vessel)
       post oauth_token_path, params: @params.to_json, headers: default_headers
-      @access_token = body_to_json['access_token']
-      @token_type = body_to_json['token_type']
+      body_to_json
+      expect(@json['error'].present?).to eql(false)
+      @access_token = @json['access_token']
+      @token_type = @json['token_type']
       get api_v1_me_path, headers: default_authenticated_headers
       expect(response.status).to eql(200)
       json = body_to_json

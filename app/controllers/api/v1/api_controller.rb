@@ -44,7 +44,7 @@ module Api::V1
     end
 
     def parse_request
-      @json = JSON.parse(@request.body.read)
+      #@json = JSON.parse(request.body.read)
     end
 
     def empty_response

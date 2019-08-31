@@ -7,7 +7,7 @@ module Api::V1
 
     # GET /api/v1/regions
     def index
-      Region.all.map { |region| region.to_json }
+      render json: { 'regions': Region.all.map { |region| region.to_json } }
     end
 
     # GET /api/v1/regions/:id

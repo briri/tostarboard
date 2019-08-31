@@ -21,4 +21,13 @@ class Event < ApplicationRecord
 
   validates_with StartOnValidator
   validates_with RegistrationDateValidator
+
+  # JSON for API
+  def to_json(options = {})
+    payload = super(%i[club_type name description url contact_email])
+    payload['region'] = JSON.parse(region.to_hateoas('part_of'))
+    payload['events'] = events.map { |e| JSON.parse(e.to_hateoas('sponsor_of')) }
+    payload['series'] = series.map { |e| JSON.parse(e.to_hateoas('sponsor_of')) }
+    payload
+  end
 end

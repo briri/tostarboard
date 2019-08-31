@@ -9,18 +9,17 @@ class Club < ApplicationRecord
   has_many   :series, dependent: :destroy
 
   # Validations
-  validates  :club_type, presence: true
+  validates  :category, presence: true
   validates  :name, presence: true, uniqueness: { case_sensitive: false }
 
-  enum club_type: %i[yacht_club sailing_association]
+  enum category: %i[yacht_club sailing_association]
 
   # JSON for API
   def to_json(options = {})
-    payload = JSON.parse(super(only: %i[id club_type name description]))
-    payload[:region] = JSON.parse(region.to_json)
-    payload[:events] = events.map { |e| JSON.parse(e.to_hateoas) }
-    payload[:series] = series.map { |e| JSON.parse(e.to_hateoas) }
-    payload[:links] = to_hateoas if id.present?
-    payload.to_json
+    payload = super(%i[category name description url contact_email])
+    payload['region'] = JSON.parse(region.to_hateoas('part_of'))
+    payload['events'] = events.map { |e| JSON.parse(e.to_hateoas('sponsor_of')) }
+    payload['series'] = series.map { |e| JSON.parse(e.to_hateoas('sponsor_of')) }
+    payload
   end
 end
